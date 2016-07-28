@@ -4,3 +4,5 @@ fls
 florm.db
 florm/__pycache__/
 __pycache__/
+*.swp
+.swp
