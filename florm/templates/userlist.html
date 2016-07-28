@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>The Child Page</h1>
+<p>List of all users:</p>
+<br>
+<ul>
+{% for u in users %}
+<li>{{u}}</li>
+{% endfor %}
+</ul>
+{% endblock %}
