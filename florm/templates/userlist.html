@@ -3,9 +3,7 @@
 <h1>The Child Page</h1>
 <p>List of all users:</p>
 <br>
-<ul>
 {% for u in users %}
-<li>{{u}}</li>
+{{u.name|safe}}
 {% endfor %}
-</ul>
 {% endblock %}
