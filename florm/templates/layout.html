@@ -6,9 +6,22 @@
 
   </head>
   <body>
+    <p>
+      <a href="{{url_for('index')}}">Home</a>
+      <a href="{{url_for('userlist')}}">Users</a>
+      <a href="{{url_for('input_form')}}">Add New</a>
+    </p>
     <h1>{{pagename}}</h1>
     <p>{{message}}</p>  
     {% block content %}
     {% endblock %}
+    <div>
+      <h3>Posts</h3>
+      <ul>
+      {% for post in posts %}
+        <li><a href="{{url_for('view_post',postid=post.id)}}">[{{post.id}}] - {{post.title}}</a></li>
+      {% endfor %}
+      </ul>
+    </div>
   </body>
 </html>

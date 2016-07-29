@@ -1,11 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
-    <form action="{{ url_for('adduser') }}" method="post" class="adduser">
+<h2>Add User</h2>
+    <form action="{{ url_for('add_user') }}" method="post" class="add_user">
       <dl>
         <dt>Name:
         <dd><input type="text" size="30" name="Name">
         <dt>Email:
         <dd><textarea name="email" rows="5" cols="40"></textarea>
+        <dd><input type="submit" value="Add">
+      </dl>
+    </form>
+<h2>Add Post</h2>
+    <form action="{{ url_for('add_post') }}" method="post" class="add_post">
+      <dl>
+        <dt>Title:
+        <dd><input type="text" size="30" name="title">
+        <dt>Body:
+        <dd><textarea name="body" rows="5" cols="40"></textarea>
         <dd><input type="submit" value="Share">
       </dl>
     </form>

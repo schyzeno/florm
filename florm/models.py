@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Text, DateTime
 from florm.database import Base
+import datetime
 
 class User(Base):
     __tablename__ = 'users'
@@ -13,3 +14,18 @@ class User(Base):
 
     def __repr__(self):
         return '<User %r>' % (self.name)
+
+class Post(Base):
+    __tablename__ = 'post'
+    id = Column(Integer, primary_key=True)
+    title = Column(String, nullable=False)
+    body = Column(Text, nullable=True)
+    timestamp = Column(DateTime)
+    
+    def __init__(self, title=None, body=None, timestamp=datetime.datetime.now()):  
+        self.title = title
+        self.body = body
+        self.timestamp = timestamp
+    
+    def __repr__(self):
+        return '<Post %r, %r>' % (self.id,self.title)
