@@ -20,6 +20,8 @@
       <ul>
       {% for post in posts %}
         <li><a href="{{url_for('view_post',postid=post.id)}}">[{{post.id}}] - {{post.title}}</a></li>
+      {% else %}
+        <li><em>No Posts.</em></li>
       {% endfor %}
       </ul>
     </div>

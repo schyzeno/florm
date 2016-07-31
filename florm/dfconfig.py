@@ -1,3 +1,5 @@
 DEBUG = True
 SECRET_KEY='57b70558a7ab6a342951d03e17270051ea9762e22bc7aad7'
 USER='NAM'
+DATABASE='sqlite:///florm.db'
+DBECHO = True
