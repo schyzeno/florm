@@ -3,7 +3,6 @@ from flask import render_template, g,request,url_for, redirect, flash
 from florm.database import db_session,init_db
 from florm.models import User, Post
 
-
 @app.teardown_appcontext
 def shotdown_session(exception=None):
     db_session.remove()
@@ -38,6 +37,9 @@ def input_form():
 @app.route('/add', methods=['POST'])
 def add_user():
     print("entered body")
+    error = None
+    if request.form['Name'] == app.config['USER']:
+        return render_template('layout.html',message='match!', pagename='grats')
     db_session.add(User(name=request.form['Name'],email=request.form['email']))
     db_session.commit()
     print("attempt to redirect to:")
@@ -50,3 +52,22 @@ def add_post():
     db_session.add(post)
     db_session.commit()
     return redirect(url_for('view_post',postid=post.id))
+
+@app.route('/edit/<postid>')
+def edit(postid):
+    #firstpost = db_session.query(User).filter(User.id==postid).first()
+    post = db_session.query(Post).filter_by(id=postid).first()
+    posts = db_session.query(Post).all()
+    return render_template('edit.html',pagename='edit post', post=post, posts=posts, message='editting post: %s' % (post.id))
+
+@app.route('/edit_post', methods=['POST'])
+def edit_post():
+    post = db_session.query(Post).filter_by(id=request.form['postid']).first()
+    post.title= request.form['title']
+    post.body= request.form['body']
+    db_session.commit()
+    return redirect(url_for('view_post',postid=post.id))
+
+
+
+

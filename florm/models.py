@@ -29,3 +29,5 @@ class Post(Base):
     
     def __repr__(self):
         return '<Post %r, %r>' % (self.id,self.title)
+
+
