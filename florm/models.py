@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime
-from florm.database import Base
+from florm.database import get_base
 import datetime
+
+Base = get_base()
 
 class User(Base):
     __tablename__ = 'users'

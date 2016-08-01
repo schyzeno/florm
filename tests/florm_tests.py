@@ -1,27 +1,31 @@
 import os
-import unittest
+import pytest
 import tempfile
 
 from context import florm
 from florm.database import init_db
+#prefix ='sqlite:///',
+@pytest.fixture
+def client(request):
+    db_fd, florm.app.config['DATABASE'] = tempfile.mkstemp()
+    florm.app.config['DBECHO'] = False
+    florm.app.config['TESTING'] = True
+    print(db_fd)
+    client = florm.app.test_client()
+    with florm.app.app_context():
+        init_db()
 
-class FlormTestCase(unittest.TestCase):
-
-    def setUp(self):
-        self.db_fd, florm.app.config['DATABASE'] = tempfile.mkstemp()
-        florm.app.config['ECHODB'] = False
-        florm.app.config['TESTING'] = True
-        self.app = florm.app.test_client()
-        with florm.app.app_context():
-            init_db()
-
-    def tearDown(self):
-        os.close(self.db_fd)
+    def teardown():
+        os.close(db_fd)
         os.unlink(florm.app.config['DATABASE'])
-    
-    def test_empty_db(self):
-        rv = self.app.get('/')
-        assert b'No Posts.' in rv.data
+    request.addfinalizer(teardown)
 
-if __name__ == '__main__':
-    unittest.main()
+    return client
+
+
+def test_empty_db(client):
+    rv = client.get('/')
+    assert b'No Posts.' in rv.data
+
+#if __name__ == '__main__':
+#    unittest.main()
